@@ -1,16 +1,29 @@
-# weather
+# Flutter Weather App
 
-A new Flutter project.
+A Flutter weather application that fetches weather data from an API and displays it in a clean, user-friendly interface with Cupertino design for iOS devices.
+
+## Features
+- **Weather Data Fetching**: Integrates with a weather API to fetch real-time weather data.
+- **Cupertino Design**: Tailored for iOS users with Cupertino widgets for a native look and feel.
+- **Weather Display**: Shows weather information such as temperature, humidity, wind speed, and weather conditions.
+- **Error Handling**: Displays an error message when the weather data cannot be fetched.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application. To get started with this project, follow the instructions below.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Make sure you have the following installed:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter SDK: [Install Flutter](https://flutter.dev/docs/get-started/install)
+- Dart SDK (comes with Flutter)
+- A code editor (e.g., VS Code, Android Studio)
+
+### Setup Instructions
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/sinanex/weather_App/tree/main
+   cd flutter-weather-app
