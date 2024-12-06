@@ -15,6 +15,10 @@ class FetchData extends ChangeNotifier {
   String? selectedImage;
   String? feelLike;
   bool isDataFetch = true;
+  String? pressure;
+  String? humidty;
+  String? sunRise;
+  String? sunSet;
   Future<Whether?> fetchApi(String location) async {
     print("Fetching data for location: $location");
     try {
@@ -39,6 +43,8 @@ class FetchData extends ChangeNotifier {
 
     final weatherData = await fetchApi(locationData);
     if (weatherData != null) {
+      sunSet = weatherData.sunSet;
+      sunRise = weatherData.sunRise;
       city = weatherData.cityName;
       temperature = weatherData.temeprature;
       condition = weatherData.contition;
@@ -46,6 +52,8 @@ class FetchData extends ChangeNotifier {
       maxtemp = weatherData.maxtemp;
       feelLike = weatherData.feelLike;
       mintemp = weatherData.mintemp;
+      humidty = weatherData.humidity;
+      pressure = weatherData.pressure;
       switch (condition) {
         case "Thunderstorm":
           selectedImage = images[8];

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/api.dart';
-import 'package:weather/homePage.dart';
-import 'package:weather/provider.dart';
+import 'package:weather/splash.dart';
 
 void main(){
   runApp(const MyApp());
@@ -15,20 +14,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => themeChangeProvider()),
         ChangeNotifierProvider(create: (context) => FetchData(),),
-      ],
-      child: Consumer<themeChangeProvider>(
-        builder: (context, theme, child) =>  CupertinoApp(
+      ], child:   CupertinoApp(
              
           theme: CupertinoThemeData(
             textTheme: const CupertinoTextThemeData(),
-            brightness: theme.theme ,
+            brightness: Brightness.light ,
           ),
           debugShowCheckedModeBanner: false,
-          home:  HomePage(),
+          home:  SplashScreen(),
         ),
-      ),
+      
     );
   }
 }

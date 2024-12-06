@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/api.dart';
-import 'package:weather/settings.dart';
 
 class HomePage extends StatefulWidget {
-
-   const HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,16 +13,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController searchCtrl = TextEditingController();
-@override
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Provider.of<FetchData>(context,listen: false).displayData("malappuram");
+    Provider.of<FetchData>(context, listen: false).displayData("malappuram");
   }
   @override
   Widget build(BuildContext context) {
-
-
+    final data = Provider.of<FetchData>(context).temperature;
+    if (data == null) {
+      return CupertinoPageScaffold(
+          child: Center(child: CircularProgressIndicator()));
+    }
     return CupertinoPageScaffold(
       child: SafeArea(
         child: SingleChildScrollView(
@@ -38,34 +39,30 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Consumer<FetchData>(
                         builder: (context, api, child) => CupertinoTextField(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: CupertinoColors.systemGrey,
+                              )),
                           controller: searchCtrl,
-                          suffix: IconButton(icon: const Icon( CupertinoIcons.search),onPressed: () {
-                            api.displayData(searchCtrl.text);
-                            searchCtrl.clear();
-                          },),
+                          suffix: IconButton(
+                            icon: const Icon(CupertinoIcons.search),
+                            onPressed: () {
+                              api.displayData(searchCtrl.text);
+                              searchCtrl.clear();
+                            },
+                          ),
                           onSubmitted: (value) {
                             api.displayData(value);
-                
                           },
-                          placeholder: 'search a city',
+                          placeholder: ' search a city',
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
                       ),
                     )),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SettingsPage()),
-                        );
-                      },
-                      icon: const Icon(CupertinoIcons.settings),
-                    ),
                   ],
                 ),
               ),
-              
               Consumer<FetchData>(builder: (context, apiFetch, child) {
                 return Text(
                   apiFetch.city ?? "search a city",
@@ -125,30 +122,13 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    // Consumer<FetchData>(
-                    //   builder: (context, value, child) => Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                         
-                    //       Text(
-                    //         "high : ${double.parse(value.maxtemp??'0').toInt()}°",
-                    //         style: textstyle(),
-                    //       ),
-                    //       const SizedBox(width: 30),
-        
-                    //       Text(
-                    //         "Low : ${double.parse(value.mintemp??"0").toInt()}°",
-                    //         style: textstyle(),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     Consumer<FetchData>(
-                   builder: (context, feelLikw, child) => Text("Feels like : ${double.parse(feelLikw.feelLike!).toInt()}°")),
+                        builder: (context, feelLikw, child) => Text(
+                            "Feels like : ${double.parse(feelLikw.feelLike ?? '0').toInt()}°")),
                     const SizedBox(height: 30),
                     Consumer<FetchData>(
                       builder: (context, img, child) => Image.asset(
-                        img.selectedImage??'assets/images/drizzle.png',
+                        img.selectedImage ?? 'assets/images/clouds.png',
                         width: 200,
                       ),
                     ),
@@ -161,17 +141,44 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 30),
                     Padding(
+                      padding: const EdgeInsets.only(left: 25, right: 25),
+                      child: Consumer<FetchData>(
+                        builder: (context, time, child) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            wethercon(
+                                name: 'sun rise',
+                                width: 170,
+                                data: DateFormat('hh:mm a').format(
+                                    DateTime.fromMicrosecondsSinceEpoch(
+                                        int.parse(time.sunRise ?? '0')))),
+                            wethercon(
+                                name: 'sun set',
+                                width: 170,
+                                data: DateFormat('hh:mm a').format(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        int.parse(time.sunSet ?? '0') * 1000)))
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.all(25.0),
-                      child: Row(
-                        
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      
-                        children: [
-                       wethercon(name: 'wind'),
-                       wethercon(name: 'pressure'),
-                       wethercon(name: 'humidity'),
-                      
-                        ],
+                      child: Consumer<FetchData>(
+                        builder: (context, wetherData, child) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            wethercon(
+                                name: 'wind',
+                                data: "${wetherData.windSpeed ?? '0'} m/s"),
+                            wethercon(
+                                name: 'pressure',
+                                data: "${wetherData.pressure ?? '0'} hPa"),
+                            wethercon(
+                                name: 'humidity',
+                                data: "${wetherData.humidty ?? '0'}%"),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -184,22 +191,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container wethercon({required String name,String? data}) {
+  Container wethercon(
+      {required String name, String? data, double? width = 100}) {
     return Container(
-     child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(name),
-        Text("data")
-      ],
-     ),
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey[100],
-                    ),
-                   );
+      width: width,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[100],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            name,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            data ?? '0',
+            style: const TextStyle(color: Colors.black),
+          )
+        ],
+      ),
+    );
   }
 
   String _getMonthName(int month) {
@@ -228,5 +246,3 @@ TextStyle textstyle() {
     fontSize: 20,
   );
 }
-
-

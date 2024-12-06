@@ -40,6 +40,7 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.3.3
   geocoding: ^3.0.0
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:

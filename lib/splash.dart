@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,22 +15,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 2), themeCheck());
+    SplashCheck();
   }
-  @override
-  
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-  
-   themeCheck()async {
-SharedPreferences _pref = await SharedPreferences.getInstance();
-     bool? themedata =  await  _pref.getBool('theme');
-     if(themedata == true){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
-     }
 
-   }
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      child: Center(child: Text("Weather",style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 30,
+      ),),),
+    );
+  }
+
+ Future<void> SplashCheck() async {
+   Timer(Duration(seconds: 2),()=> Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage())));
+     
+  }
 }
