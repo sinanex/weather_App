@@ -21,9 +21,11 @@ class FetchData extends ChangeNotifier {
   String? sunSet;
   Future<Whether?> fetchApi(String location) async {
     print("Fetching data for location: $location");
+    String? apiKey = '218ebbb372884cecfd15fecc029d35cb&units';
+    String? unit;
     try {
       final response = await http.get(Uri.parse(
-          'https://api.openweathermap.org/data/2.5/weather?q=$location&appid=218ebbb372884cecfd15fecc029d35cb&units=metric'));
+          'https://api.openweathermap.org/data/2.5/weather?q=$location&appid=$apiKey=$unit'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
