@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => FetchData(),),
-      ], child:   CupertinoApp(
+      ], child:   const CupertinoApp(
              
           theme: CupertinoThemeData(
-            textTheme: const CupertinoTextThemeData(),
+            textTheme: CupertinoTextThemeData(),
             brightness: Brightness.light ,
           ),
           debugShowCheckedModeBanner: false,

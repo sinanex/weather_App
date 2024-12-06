@@ -1,5 +1,5 @@
+// ignore: file_names
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/controller/api.dart';
@@ -22,8 +22,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final data = Provider.of<FetchData>(context).temperature;
     if (data == null) {
-      return CupertinoPageScaffold(
-          child: Center(child: CircularProgressIndicator()));
+      return const CupertinoPageScaffold(
+          child: Center(child: CupertinoActivityIndicator()));
     }
     return CupertinoPageScaffold(
       child: SafeArea(
@@ -45,8 +45,8 @@ class _HomePageState extends State<HomePage> {
                                 color: CupertinoColors.systemGrey,
                               )),
                           controller: searchCtrl,
-                          suffix: IconButton(
-                            icon: const Icon(CupertinoIcons.search),
+                          suffix: CupertinoButton(
+                            child: const Icon(CupertinoIcons.search),
                             onPressed: () {
                               api.displayData(searchCtrl.text);
                               searchCtrl.clear();
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                     const Text(
                       "in sync",
                       style: TextStyle(
-                        color: Colors.grey,
+                        color: CupertinoColors.systemGrey,
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
                       ),
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                               return const Text(
                                 "0",
                                 style:
-                                    TextStyle(fontSize: 50, color: Colors.grey),
+                                    TextStyle(fontSize: 50, color: CupertinoColors.systemGrey),
                               );
                             }
                           },
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
       height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.grey[100],
+        color: const Color.fromARGB(255, 243, 243, 245),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -208,12 +208,12 @@ class _HomePageState extends State<HomePage> {
             name,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: CupertinoColors.black,
             ),
           ),
           Text(
             data ?? '0',
-            style: const TextStyle(color: Colors.black),
+            style: const TextStyle(color: CupertinoColors.black),
           )
         ],
       ),
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
 TextStyle textstyle() {
   return const TextStyle(
     fontWeight: FontWeight.bold,
-    color: Colors.grey,
+    color: CupertinoColors.systemGrey,
     fontSize: 20,
   );
 }

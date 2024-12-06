@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/view/home/homePage.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return const CupertinoPageScaffold(
       child: Center(child: Text("Weather",style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 30,
@@ -29,9 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+ // ignore: non_constant_identifier_names
  Future<void> SplashCheck() async {
-   Timer(Duration(seconds: 2),()=> Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage())));
+   Timer( const Duration(seconds: 2),()=> Navigator.pushReplacement(
+          context, CupertinoPageRoute(builder: (context) => HomePage())));
      
   }
 }

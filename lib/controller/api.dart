@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:weather/model/model.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +33,7 @@ class FetchData extends ChangeNotifier {
         isDataFetch = false;
       }
     } catch (e) {
-      print("Exception: $e");
+      print(e);
     }
     return null;
   }
@@ -57,34 +57,25 @@ class FetchData extends ChangeNotifier {
       switch (condition) {
         case "Thunderstorm":
           selectedImage = images[8];
-          print("thunder");
           break;
         case "Rain":
           selectedImage = images[6];
-          print("rain");
           break;
         case "Clear":
           selectedImage = images[0];
-          print("clear");
           break;
         case "Mist":
           selectedImage = images[4];
-          print("mist");
           break;
         case "Clouds":
           selectedImage = images[1];
-          print("Cloud");
           break;
         default:
           selectedImage = images[7];
-          print("defualt");
           break;
       }
-      print("City: $city, Temperature: $temperature°C, Condition: $condition");
       notifyListeners();
     } else {
-      print("Failed to fetch weather data.");
-      return Text("search frist");
     }
   }
 
