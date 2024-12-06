@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/api.dart';
+import 'package:weather/controller/api.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

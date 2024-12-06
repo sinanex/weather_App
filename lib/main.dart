@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:weather/api.dart';
-import 'package:weather/splash.dart';
+import 'package:weather/controller/api.dart';
+import 'package:weather/view/splash/splash.dart';
 
 void main(){
   runApp(const MyApp());

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:weather/model.dart';
+import 'package:weather/model/model.dart';
 import 'package:http/http.dart' as http;
 
 class FetchData extends ChangeNotifier {

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather/homePage.dart';
+import 'package:weather/view/home/homePage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
