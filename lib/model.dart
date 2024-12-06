@@ -6,6 +6,8 @@ class Whether {
   final String mintemp;
   final String maxtemp;
   final String feelLike;
+  final String pressure;
+  final String humidity;
 
   Whether(
       {required this.cityName,
@@ -14,6 +16,8 @@ class Whether {
       required this.maxtemp,
       required this.mintemp,
       required this.feelLike,
+      required this.humidity,
+      required this.pressure,
       required this.wind});
 
   factory Whether.fromJson(Map<String, dynamic> json) {
@@ -21,10 +25,12 @@ class Whether {
       feelLike: json['main']['feels_like'].toString(),
       maxtemp: json['main']['temp_max'].toString(),
       mintemp: json['main']['temp_min'].toString(),
-      cityName: json['name'],
+      cityName: json['name'].toString(),
       temeprature: json['main']['temp'].toString(),
       contition: json['weather'][0]['main'],
       wind: json['wind']['speed'].toString(),
+      humidity: json['main']['humidity'].toString(),
+      pressure: json['main']['pressure'].toString(),
     );
   }
 }

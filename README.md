@@ -25,5 +25,5 @@ Make sure you have the following installed:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/sinanex/weather_App/tree/main
-   cd flutter-weather-app
+   git clone https://github.com/sinanex/weather_App/
+   cd weather_App
